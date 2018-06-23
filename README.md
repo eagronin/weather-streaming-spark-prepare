@@ -6,6 +6,10 @@ This section describes a fully automated process of continuously aggregating the
 
 Data extraction process is described in the [previous section](https://eagronin.github.io/weather-streaming-spark-acquire/).
 
+This project is based on assignments from Big Data Specialization by University of California San Diego on Coursera.
+
+The analysis for this project was performed in Spark.
+
 ## Data Processing
 
 In the [previous section](https://eagronin.github.io/weather-streaming-spark-acquire/), we have already started processing the data transmitted by the weather station when we extracted the average wind direction from each line obtained from the station's sensors.  We would like to futher process the data on average wind direction to find the minimum and maximum values in our 10-second window. The following function prints all the values of average wind direction within a window along with the minimum and maximum of these values to the screen and outputs the same values to a file:
