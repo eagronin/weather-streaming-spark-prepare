@@ -2,7 +2,7 @@
 
 ## Overview
 
-This section describes a fully automated process of continuously aggregating the streaming weather data within a sliding window, and saving these data to a file.  Once new data are transmitted, they are processed and appended to a file.  Thus, the file is being continuously updated with new data.
+This section describes a fully automated process of continuously aggregating the streaming weather data within a sliding window and saving these data to a file.  Once new data are transmitted, they are processed and appended to a file.  Thus, the file is being continuously updated with new data.
 
 Data extraction process is described in the [previous section](https://eagronin.github.io/weather-streaming-spark-acquire/).
 
@@ -12,7 +12,7 @@ The analysis for this project was performed in Spark.
 
 ## Data Processing
 
-In the [previous section](https://eagronin.github.io/weather-streaming-spark-acquire/), we have already started processing the data transmitted by the weather station when we extracted the average wind direction from each line obtained from the station's sensors.  We would like to futher process the data on average wind direction to find the minimum and maximum values in our 10-second window. The following function prints all the values of average wind direction within a window along with the minimum and maximum of these values to the screen and outputs the same values to a file:
+In the [previous section](https://eagronin.github.io/weather-streaming-spark-acquire/), we have already started processing the data transmitted by the weather station when we extracted the average wind direction from each line obtained from the station's sensors.  We would like to further process the data on average wind direction to find the minimum and maximum values in our 10-second window. The following function prints all the values of average wind direction within a window along with the minimum and maximum of these values to the screen and outputs the same values to a file:
 
 ```python
 def stats(rdd):
@@ -37,7 +37,7 @@ Next, we call the stats() function for each RDD in our sliding window:
 window.foreachRDD(lambda rdd: stats(rdd))
 ```
 
-All the calls to the `stats()` function append (rather than overwirte) new data to `wind_direction_streaming.txt`.
+All the calls to the `stats()` function append (rather than overwrite) new data to `wind_direction_streaming.txt`.
 
 We begin the process of reading and processing the data from the weather station by calling `start()` on the `StreamingContext`:
 
@@ -63,7 +63,7 @@ max = 300, min = 285
 
 As discussed in the [previous section](https://eagronin.github.io/weather-streaming-spark-acquire/), the sliding window contains ten seconds worth of data and slides every five seconds. In the beginning, the number of values in the windows are increasing as the data accumulates.  After the third window, the size stays approximately the same. Because the window slides half as often as the size of the window, the second half of a window becomes the first half of the next window. For example, the second half of the fourth window is 285, 285, 285, 285, 288, which becomes the first half of the fifth window.
 
-We stop the process of reading the data from the weather station and wrtiting them to the file `wind_direction_streaming.txt` by calling `stop()` on the `StreamingContext`:
+We stop the process of reading the data from the weather station and writing them to the file `wind_direction_streaming.txt` by calling `stop()` on the `StreamingContext`:
 
 ```python
 ssc.stop()
